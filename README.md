@@ -1,334 +1,403 @@
-# Voting-Machine-Using-Verilog-HDL
-# 🏥 Paralysis Patient Health Monitoring System Using MPU Sensor
+# 🗳️ Voting Machine Using Verilog HDL
 
-> An embedded health-monitoring system designed to monitor patient movement and body orientation using an MPU motion sensor and provide timely alerts when abnormal movement or posture is detected.
+> A digital voting machine designed and implemented using Verilog HDL to demonstrate RTL design, digital logic, vote counting, result generation, and simulation using a hardware description language.
 
-![Embedded Systems](https://img.shields.io/badge/Embedded-Systems-blue)
-![MPU Sensor](https://img.shields.io/badge/Sensor-MPU-orange)
-![IoT](https://img.shields.io/badge/IoT-Enabled-green)
-![Healthcare](https://img.shields.io/badge/Application-Healthcare-red)
+![Verilog](https://img.shields.io/badge/HDL-Verilog-blue)
+![Digital Design](https://img.shields.io/badge/Digital-Design-green)
+![FPGA](https://img.shields.io/badge/FPGA-Ready-orange)
+![Simulation](https://img.shields.io/badge/Simulation-Testbench-purple)
 ![License](https://img.shields.io/badge/License-MIT-success)
 
 ---
 
 ## 📖 Overview
 
-Patients suffering from paralysis or severe mobility limitations may have difficulty changing their body position or communicating discomfort. Continuous monitoring can help caregivers identify unusual movement, prolonged inactivity, or changes in body orientation.
+The **Voting Machine Using Verilog HDL** is a digital system designed to simulate the basic operation of an electronic voting machine.
 
-This project proposes a **Paralysis Patient Health Monitoring System using an MPU sensor**. The MPU sensor measures motion and orientation-related parameters and provides data to the embedded controller.
+The system allows a voter to select a candidate using input switches or buttons. The corresponding candidate's vote count is incremented when a valid vote is cast.
 
-The system can be used to monitor patient movement and identify predefined abnormal conditions. Depending on the implementation, the system can generate an alert to notify a caregiver or monitoring system.
+The design is implemented using **Verilog HDL** and can be simulated using an HDL simulation tool. The project demonstrates important concepts of digital system design including:
 
-The project demonstrates the application of **embedded systems, motion sensing, sensor interfacing, and healthcare monitoring**.
-
----
-
-## 🎯 Objectives
-
-* Monitor patient movement using an MPU sensor.
-* Detect changes in patient orientation or posture.
-* Identify predefined abnormal movement conditions.
-* Provide alerts when an abnormal condition is detected.
-* Reduce the need for continuous manual observation.
-* Develop a low-cost healthcare monitoring prototype.
-* Demonstrate the application of embedded technology in assistive healthcare.
+* Combinational logic
+* Sequential logic
+* Registers
+* Counters
+* Clock-based operation
+* Reset operation
+* RTL design
+* Testbench development
+* Simulation and verification
 
 ---
 
-## ✨ Features
+# 🎯 Objectives
 
-* 📐 Motion and orientation monitoring
-* 📊 Real-time sensor data acquisition
-* 🚨 Abnormal movement detection
-* 🔔 Alert/notification mechanism
-* 💻 Embedded-system based implementation
-* 🏥 Healthcare and assistive-technology application
-* 📡 Optional IoT/cloud monitoring
+* Design a digital voting machine using Verilog HDL.
+* Provide individual voting inputs for candidates.
+* Count votes digitally.
+* Store the vote count using registers/counters.
+* Prevent invalid or unintended voting operations.
+* Provide candidate-wise vote results.
+* Verify the design using a Verilog testbench.
+* Understand RTL-based digital system design.
 
 ---
 
-## 🏗 System Architecture
+# ✨ Features
+
+* 🗳️ Candidate selection
+* 🔢 Automatic vote counting
+* 🔄 Reset functionality
+* ⏱️ Clock-controlled operation
+* 📊 Candidate-wise vote storage
+* 🚫 Invalid input handling
+* 🧪 Verilog testbench
+* 📈 Simulation waveform verification
+* 💻 RTL-based digital design
+
+---
+
+# 🏗️ System Architecture
 
 ```text
-                 Patient
-                    │
-                    ▼
-             ┌─────────────┐
-             │ MPU Sensor  │
-             │ Accelerometer│
-             │ + Gyroscope │
-             └──────┬──────┘
-                    │
-                    │ Sensor Data
-                    ▼
-             ┌─────────────┐
-             │ Microcontroller │
-             └──────┬──────┘
-                    │
-             ┌──────┴──────────┐
-             │                 │
-             ▼                 ▼
-       Data Processing      Abnormal
-       & Monitoring         Condition
-                               │
-                               ▼
-                         ┌───────────┐
-                         │   Alert   │
-                         └─────┬─────┘
-                               │
-                               ▼
-                         Caregiver /
-                         Monitoring
-                         System
+                 ┌─────────────────────┐
+                 │    Voting Inputs    │
+                 │                     │
+                 │ Candidate 1         │
+                 │ Candidate 2         │
+                 │ Candidate 3         │
+                 │ Candidate 4         │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │   Voting Controller │
+                 │                     │
+                 │ Input Validation    │
+                 │ Vote Processing     │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │    Vote Counters    │
+                 │                     │
+                 │ Candidate 1 Count   │
+                 │ Candidate 2 Count   │
+                 │ Candidate 3 Count   │
+                 │ Candidate 4 Count   │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │   Result Display    │
+                 │                     │
+                 │ Candidate Results   │
+                 └─────────────────────┘
+
+                       ▲
+                       │
+                 ┌─────┴─────┐
+                 │ Clock/Reset│
+                 └───────────┘
 ```
 
 ---
 
-## 🧠 Working Principle
+# 🧠 Working Principle
 
-The system operates by continuously acquiring motion information from the MPU sensor.
+The voting machine operates using sequential digital logic.
 
-### Step 1 — Sensor Placement
+### 1. System Initialization
 
-The MPU sensor is attached to an appropriate location on the patient's body or monitoring device.
-
-### Step 2 — Motion Measurement
-
-The sensor measures movement using its inertial sensing elements.
-
-Depending on the MPU model, this can include:
-
-* Acceleration
-* Angular velocity
-* Orientation-related information
-
-### Step 3 — Data Processing
-
-The microcontroller receives the sensor readings and processes them according to predefined thresholds or conditions.
-
-### Step 4 — Condition Detection
-
-The system checks whether the detected movement or orientation corresponds to an abnormal condition defined by the project.
-
-### Step 5 — Alert Generation
-
-When the predefined abnormal condition is detected, the system activates the configured alert mechanism.
-
-### Step 6 — Monitoring
-
-Sensor readings and alerts can optionally be transmitted to a monitoring interface or IoT platform.
-
----
-
-# 🔌 Hardware Components
-
-| Component            | Purpose                             |
-| -------------------- | ----------------------------------- |
-| MPU Sensor           | Motion and orientation sensing      |
-| Microcontroller      | Sensor data processing and control  |
-| Buzzer               | Local alert indication              |
-| LED                  | Visual status indication            |
-| Display              | Sensor/status information           |
-| Communication Module | Wireless data transmission, if used |
-| Power Supply         | Provides power to the system        |
-
-> **Note:** Update this table with the exact components used in your implementation.
-
----
-
-# 💻 Software Requirements
-
-Depending on the implementation, the project may use:
-
-* Arduino IDE
-* Embedded C/C++
-* MPU sensor library
-* Serial Monitor
-* IoT platform/software, if applicable
-
----
-
-# 📐 MPU Sensor
-
-The MPU sensor is an Inertial Measurement Unit (IMU) used for detecting motion.
-
-Typical MPU sensors provide:
-
-### Accelerometer
-
-Measures acceleration along different axes.
+When the system is powered on or reset is activated, all candidate vote counters are initialized to zero.
 
 ```text
-        Z
-        │
-        │
-        ●────── X
-       /
-      /
-     Y
+Candidate 1 = 0
+Candidate 2 = 0
+Candidate 3 = 0
+Candidate 4 = 0
 ```
 
-### Gyroscope
+### 2. Candidate Selection
 
-Measures angular velocity around the sensor axes.
+The voter selects a candidate through the corresponding input.
 
-The sensor data can be used to determine changes in movement and orientation.
+For example:
+
+```text
+Candidate 1 → vote input 1
+Candidate 2 → vote input 2
+Candidate 3 → vote input 3
+Candidate 4 → vote input 4
+```
+
+### 3. Vote Processing
+
+When a valid candidate input is detected, the corresponding vote counter is incremented.
+
+```text
+Candidate 1 selected
+        ↓
+Candidate 1 Counter
+        ↓
+Counter = Counter + 1
+```
+
+### 4. Vote Storage
+
+The vote counts are stored in registers so that the values are retained until another vote or system reset occurs.
+
+### 5. Result Generation
+
+At the end of the voting process, the stored counts represent the total votes received by each candidate.
 
 ---
 
-# 🔄 System Flowchart
+# 🔄 Voting Process
 
 ```text
-              START
-                │
-                ▼
-        Initialize System
-                │
-                ▼
-        Initialize MPU
-                │
-                ▼
-        Read Sensor Data
-                │
-                ▼
-       Process Sensor Data
-                │
-                ▼
-       Abnormal Condition?
-           /           \
-         YES            NO
-          │              │
-          ▼              │
-     Generate Alert      │
-          │              │
-          └──────┬───────┘
-                 │
-                 ▼
-          Continue Monitoring
-                 │
-                 ▼
-              Repeat
+                 START
+                   │
+                   ▼
+             Initialize
+             Vote Counters
+                   │
+                   ▼
+             Wait for Vote
+                   │
+                   ▼
+          Candidate Selected?
+             /           \
+           NO             YES
+           │               │
+           │               ▼
+           │        Validate Input
+           │               │
+           │               ▼
+           │        Increment
+           │        Candidate Count
+           │               │
+           └───────┬───────┘
+                   │
+                   ▼
+              Continue
+              Voting
+                   │
+                   ▼
+                RESET
+                   │
+                   ▼
+             Clear Counters
 ```
 
 ---
 
-# 📊 Monitoring Parameters
+# 🔢 Candidate Vote Counting
 
-The system can monitor parameters such as:
+The basic counting operation is:
 
-| Parameter           | Purpose                             |
-| ------------------- | ----------------------------------- |
-| X-axis acceleration | Detect movement along X-axis        |
-| Y-axis acceleration | Detect movement along Y-axis        |
-| Z-axis acceleration | Detect movement along Z-axis        |
-| Angular velocity    | Detect rotational movement          |
-| Orientation         | Monitor body/device orientation     |
-| Movement status     | Determine active/inactive condition |
+```text
+New Vote Count = Previous Vote Count + 1
+```
+
+For example:
+
+```text
+Initial:
+Candidate 1 = 0
+
+After first vote:
+Candidate 1 = 1
+
+After second vote:
+Candidate 1 = 2
+
+After third vote:
+Candidate 1 = 3
+```
+
+The same principle is applied to each candidate.
 
 ---
 
-# 🚨 Alert System
+# 🔌 Inputs and Outputs
 
-The alert mechanism can be configured according to the project implementation.
+The exact signal names depend on the Verilog implementation.
 
-Possible alerts include:
+A typical interface can be:
 
-* 🔊 Buzzer
-* 💡 LED indication
-* 📱 Mobile notification
-* 📡 IoT notification
-* 🖥 Dashboard notification
+| Signal   | Direction | Description            |
+| -------- | --------- | ---------------------- |
+| `clk`    | Input     | System clock           |
+| `reset`  | Input     | Resets vote counters   |
+| `vote1`  | Input     | Candidate 1 vote       |
+| `vote2`  | Input     | Candidate 2 vote       |
+| `vote3`  | Input     | Candidate 3 vote       |
+| `vote4`  | Input     | Candidate 4 vote       |
+| `count1` | Output    | Candidate 1 vote count |
+| `count2` | Output    | Candidate 2 vote count |
+| `count3` | Output    | Candidate 3 vote count |
+| `count4` | Output    | Candidate 4 vote count |
 
-Example:
+> Update the signal names above to exactly match your Verilog source code.
 
-```text
-Abnormal Condition Detected
-            │
-            ▼
-      Microcontroller
-            │
-      ┌─────┴─────┐
-      ▼           ▼
-    Buzzer       IoT
-                  │
-                  ▼
-             Caregiver
-```
+---
+
+# 💻 Technologies Used
+
+* **Verilog HDL**
+* RTL Design
+* Digital Logic Design
+* Sequential Logic
+* Counters and Registers
+* HDL Simulation
+* Testbench Verification
+
+---
+
+# 🛠️ Tools
+
+The project can be developed and simulated using HDL tools such as:
+
+* ModelSim
+* QuestaSim
+* Vivado
+* Quartus Prime
+* EDA Playground
+
+Use the tool that matches your actual project implementation.
 
 ---
 
 # 📂 Project Structure
 
 ```text
-paralysis-patient-health-monitoring-system
+voting-machine-using-verilog-hdl
 │
 ├── README.md
 ├── LICENSE
 ├── .gitignore
+│
+├── src/
+│   ├── voting_machine.v
+│   └── modules/
+│
+├── testbench/
+│   └── voting_machine_tb.v
+│
+├── simulation/
+│   ├── waveform.png
+│   └── simulation_results.txt
 │
 ├── docs/
 │   ├── Project_Report.pdf
 │   └── Presentation.pptx
 │
 ├── images/
-│   ├── prototype.jpg
-│   ├── hardware_setup.jpg
 │   ├── block_diagram.png
 │   ├── flowchart.png
-│   └── circuit_diagram.png
+│   ├── rtl_schematic.png
+│   └── simulation_waveform.png
 │
-├── hardware/
-│   ├── circuit_diagram.pdf
-│   ├── wiring_diagram.png
-│   └── component_list.md
-│
-├── software/
-│   └── main/
-│       └── main.ino
-│
-├── results/
-│   ├── sensor_readings.png
-│   ├── output.jpg
-│   └── alert_test.jpg
-│
-└── videos/
-    └── demo_link.txt
+└── results/
+    ├── output.png
+    └── test_results.txt
 ```
 
 ---
 
-# 📷 Project Images
+# 📁 File Description
 
-## Prototype
+| File/Folder   | Description                     |
+| ------------- | ------------------------------- |
+| `src/`        | Main Verilog HDL source code    |
+| `testbench/`  | Testbench used for verification |
+| `simulation/` | Simulation outputs and waveform |
+| `docs/`       | Project report and presentation |
+| `images/`     | Diagrams and project images     |
+| `results/`    | Test and simulation results     |
+| `README.md`   | Project documentation           |
 
-Add your actual project photograph here.
+---
 
-```md
-![Project Prototype](images/prototype.jpg)
+# 🧪 Testbench
+
+A Verilog testbench is used to verify the functionality of the voting machine without requiring physical hardware.
+
+The testbench applies different voting combinations and observes the candidate vote counters.
+
+Example test sequence:
+
+```text
+Reset
+  ↓
+Candidate 1 votes
+  ↓
+Candidate 2 votes
+  ↓
+Candidate 1 votes
+  ↓
+Candidate 3 votes
+  ↓
+Candidate 1 votes
+  ↓
+Check Results
 ```
+
+Expected result:
+
+```text
+Candidate 1 = 3
+Candidate 2 = 1
+Candidate 3 = 1
+Candidate 4 = 0
+```
+
+> Replace this example with your actual testbench sequence and results if they differ.
 
 ---
 
-## Hardware Setup
+# 📈 Simulation
 
-```md
-![Hardware Setup](images/hardware_setup.jpg)
+The design should be verified using a waveform viewer.
+
+Important signals to observe include:
+
+```text
+clk
+reset
+vote1
+vote2
+vote3
+vote4
+count1
+count2
+count3
+count4
 ```
 
+Example:
+
+```text
+Clock      ─┐_┌─┐_┌─┐_┌─┐_┌─
+
+Vote 1     ____┌──────────────
+
+Count 1    0────1─────────────
+```
+
+The waveform should demonstrate that a valid voting input increments only the corresponding candidate counter.
+
 ---
+
+# 🖼️ Project Images
 
 ## Block Diagram
 
+Add your actual block diagram:
+
 ```md
 ![Block Diagram](images/block_diagram.png)
-```
-
----
-
-## Circuit Diagram
-
-```md
-![Circuit Diagram](images/circuit_diagram.png)
 ```
 
 ---
@@ -341,108 +410,140 @@ Add your actual project photograph here.
 
 ---
 
-# 🚀 Getting Started
+## RTL Schematic
 
-## 1. Clone the Repository
+```md
+![RTL Schematic](images/rtl_schematic.png)
+```
+
+---
+
+## Simulation Waveform
+
+```md
+![Simulation Waveform](images/simulation_waveform.png)
+```
+
+---
+
+# 🚀 Simulation Instructions
+
+## Using a Verilog Simulator
+
+1. Clone the repository.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/paralysis-patient-health-monitoring-system.git
+git clone https://github.com/YOUR_USERNAME/voting-machine-using-verilog-hdl.git
 ```
 
-Move into the project directory:
+2. Open the project in your Verilog simulation environment.
 
-```bash
-cd paralysis-patient-health-monitoring-system
-```
-
----
-
-## 2. Hardware Setup
-
-Connect the MPU sensor to the microcontroller according to the circuit diagram provided in:
+3. Add the design file:
 
 ```text
-hardware/circuit_diagram.pdf
+src/voting_machine.v
 ```
 
----
-
-## 3. Install Required Libraries
-
-Open Arduino IDE and install the appropriate MPU sensor library required by your implementation.
-
----
-
-## 4. Upload the Program
-
-Open:
+4. Add the testbench:
 
 ```text
-software/main/main.ino
+testbench/voting_machine_tb.v
 ```
 
-Select the appropriate board and COM port.
+5. Compile the Verilog files.
 
-Compile and upload the program.
+6. Run the simulation.
 
----
+7. Open the waveform viewer.
 
-## 5. Monitor Sensor Data
-
-Open the Serial Monitor to observe the sensor readings and system status.
+8. Observe the voting inputs and candidate counters.
 
 ---
 
-# 🧪 Testing
+# 🧪 Verification
 
-The system can be tested under different movement conditions.
+The design should be tested for:
 
-| Test                  | Expected Result                                           |
-| --------------------- | --------------------------------------------------------- |
-| Normal movement       | System continues monitoring                               |
-| Change in orientation | Sensor values change                                      |
-| Sudden movement       | System evaluates predefined condition                     |
-| Abnormal condition    | Alert is generated                                        |
-| No movement           | System continues monitoring according to configured logic |
-
-> Replace the expected results with your actual test results before publishing.
-
----
-
-# 📊 Results
-
-The prototype demonstrates the ability to:
-
-* Acquire motion data from the MPU sensor.
-* Process sensor readings using a microcontroller.
-* Monitor changes in patient/device movement.
-* Detect predefined abnormal conditions.
-* Generate alerts according to the configured system.
-
-Actual measured values and test results should be added to the `results/` directory.
+* Reset operation
+* Candidate 1 voting
+* Candidate 2 voting
+* Candidate 3 voting
+* Candidate 4 voting
+* Multiple votes for the same candidate
+* Different candidate combinations
+* Invalid/multiple candidate input conditions
+* Counter reset
 
 ---
 
-# 🌍 Applications
+# 📊 Example Result
 
-* Assistive healthcare systems
-* Patient movement monitoring
-* Elderly-care monitoring
-* Home healthcare
-* Rehabilitation monitoring
-* Hospital monitoring prototypes
-* IoT-based healthcare systems
-* Embedded healthcare research
+Example:
+
+| Candidate   | Votes |
+| ----------- | ----: |
+| Candidate 1 |     3 |
+| Candidate 2 |     1 |
+| Candidate 3 |     2 |
+| Candidate 4 |     0 |
+
+The final values depend on the voting sequence applied during simulation.
+
+---
+
+# ⚙️ RTL Design Concepts Demonstrated
+
+This project provides practical understanding of:
+
+### Sequential Logic
+
+Vote counts are updated synchronously with the clock.
+
+### Counters
+
+Each candidate's votes are maintained using digital counters.
+
+### Registers
+
+Registers store the current vote totals.
+
+### Reset Logic
+
+Reset initializes the voting machine to its starting state.
+
+### Testbench
+
+The testbench verifies the functionality of the RTL design.
+
+### Waveform Analysis
+
+Simulation waveforms are used to verify the relationship between inputs and outputs.
+
+---
+
+# 🌐 Applications
+
+The design concept can be used for:
+
+* Digital electronics education
+* FPGA learning
+* Verilog HDL projects
+* RTL design practice
+* Digital voting system prototypes
+* Hardware description language training
+* FPGA-based embedded systems
+
+> This project is an educational RTL/FPGA prototype and is not intended to represent a certified real-world election system.
 
 ---
 
 # ⚠️ Limitations
 
-* Sensor readings can be affected by placement and calibration.
-* Motion thresholds need to be configured according to the application.
-* The prototype should not be considered a replacement for professional medical monitoring.
-* Wireless monitoring, if implemented, depends on communication/network availability.
-* Sensor-based movement detection alone cannot diagnose a medical condition.
+* This is a prototype digital design.
+* It does not implement a complete real-world election security architecture.
+* Authentication and voter verification are not included unless implemented separately.
+* Secure vote storage is not included in the basic design.
+* Physical deployment would require additional security, reliability, auditing, and certification measures.
 
 ---
 
@@ -450,61 +551,72 @@ Actual measured values and test results should be added to the `results/` direct
 
 Possible improvements include:
 
-* 📱 Dedicated mobile application
-* ☁️ Cloud-based patient monitoring
-* 📡 Real-time IoT alerts
-* 📊 Web-based health dashboard
-* 🧠 Machine-learning-based movement classification
-* 🔋 Battery-level monitoring
-* 📍 GPS-based emergency location
-* ❤️ Integration with additional health sensors
-* 📈 Long-term patient activity analysis
-* 🚨 Emergency caregiver notification
+* 🔐 Voter authentication
+* 🪪 RFID-based voter identification
+* 👆 Fingerprint authentication
+* 📺 Seven-segment/LCD result display
+* 💾 Non-volatile vote storage
+* 🔒 Secure vote storage
+* 🏆 Automatic winner detection
+* 📊 Real-time vote statistics
+* 🖥 FPGA board implementation
+* 🔄 Multiple election modes
+* 🧪 More extensive verification using SystemVerilog/UVM
 
 ---
 
-# 📚 Documentation
+# 📄 Documentation
 
-The repository can contain:
+The repository contains supporting documentation such as:
 
 * Project Report
 * Presentation
-* Circuit Diagram
+* Verilog Source Code
+* Testbench
 * Block Diagram
 * Flowchart
-* Source Code
-* Component Datasheets
-* Hardware Photographs
+* RTL Schematic
+* Simulation Waveform
 * Test Results
-* Demonstration Video
+
+---
+
+# 📚 Learning Outcomes
+
+Through this project, you can understand:
+
+* Verilog HDL syntax
+* RTL design methodology
+* Digital counters
+* Sequential circuits
+* Clocked logic
+* Reset design
+* Testbench creation
+* Simulation
+* Waveform analysis
+* FPGA-oriented digital design
 
 ---
 
 # 👨‍💻 Project Information
 
-**Project:** Paralysis Patient Health Monitoring System Using MPU Sensor
+**Project Title:** Voting Machine Using Verilog HDL
 
-**Domain:** Embedded Systems / Healthcare / IoT
+**Domain:** Digital Electronics / FPGA / VLSI
 
-**Primary Technology:** MPU Motion Sensor
+**HDL:** Verilog
 
-**Application:** Assistive Healthcare Monitoring
+**Design Type:** RTL
+
+**Application:** Digital Voting System Prototype
 
 ---
 
 # 📜 License
 
-This project is released under the MIT License.
+This project is released under the **MIT License**.
 
-It is intended primarily for educational and research purposes.
-
----
-
-# ⚕️ Disclaimer
-
-This project is an educational/engineering prototype and is **not a certified medical device**.
-
-It should not be used as the sole system for diagnosing, treating, or making critical medical decisions about a patient.
+It is intended for educational and research purposes.
 
 ---
 
